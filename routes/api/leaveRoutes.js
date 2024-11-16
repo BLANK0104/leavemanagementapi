@@ -215,14 +215,14 @@ router.get('/student/:studentId', async (req, res) => {
 
 router.post('/request', async (req, res) => {
     console.log('Processing new leave request');
-    const { studentId, startDate, endDate, reason } = req.body;
-    console.log('Request details:', { studentId, startDate, endDate, reason });
+    const { studentId, startDate, endDate, reason, totalAttendance, academicDaysLeave, totalDays, guardianName, guardianContact, guardianEmail } = req.body;
+    console.log('Request details:', { studentId, startDate, endDate, reason, totalAttendance, academicDaysLeave, totalDays, guardianName, guardianContact, guardianEmail });
     try {
         console.log('Inserting leave request into database...');
         const result = await pool.query(
-            `INSERT INTO leave_requests (student_id, start_date, end_date, reason)
-             VALUES ($1, $2, $3, $4) RETURNING *`,
-            [studentId, startDate, endDate, reason]
+            `INSERT INTO leave_requests (student_id, start_date, end_date, reason, total_attendance, academic_days_leave, total_days, guardian_name, guardian_contact, guardian_email)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+            [ studentId ,startDate, endDate, reason, totalAttendance, academicDaysLeave, totalDays, guardianName, guardianContact, guardianEmail]
         );
         console.log('Insert result:', result.rows[0]);
         res.status(201).json(result.rows[0]);
