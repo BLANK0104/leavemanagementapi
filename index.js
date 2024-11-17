@@ -20,7 +20,7 @@ pool.connect((err) => {
 });
 
 // Default route
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     res.send('Welcome to the Leave Management API');
 });
 
@@ -35,6 +35,9 @@ app.use('/api/login', userRoutes);
 //import and use leave sending routes
 const leaveSendingRoutes = require('./routes/api/leaveSendingRoutes');
 app.use('/api/leave', leaveSendingRoutes);
+
+const hisotryRoutes = require('./routes/api/historyRoutes');
+app.use('/api/history', hisotryRoutes);
 
 // Start the server
 app.listen(PORT, (err) => {
